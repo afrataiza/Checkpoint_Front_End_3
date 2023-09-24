@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./style";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../contexts/auth";
+import { AuthContext } from "../../contexts/auth";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -13,10 +13,10 @@ const Signup = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+  const { signup } = useContext(AuthContext);
 
-  const handleSignup = () => {
-    if (!email | !emailConf | !password) {
+  const handleSignup = async () => {
+    if (!email || !emailConf || !password) {
       setError("All the fields must be filled");
       return;
     } else if (email !== emailConf) {
@@ -24,15 +24,18 @@ const Signup = () => {
       return;
     }
 
-    const res = signup(email, password);
-
-    if (res) {
-      setError(res);
-      return;
+    try {
+      const res = await signup(email, password);
+      if (res) {
+        setError(res);
+      } else {
+        alert("User registered with success!");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      setError("Error during signup");
     }
-
-    alert("User registered with success!");
-    navigate("/");
   };
 
   return (

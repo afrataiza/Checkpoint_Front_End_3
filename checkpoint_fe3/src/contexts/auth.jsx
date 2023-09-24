@@ -5,7 +5,7 @@ import axios from "axios";
 export const AuthContext = createContext({});
 
 export const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
-export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+export const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (!passwordRegex.test(password)) {
-      return "Weak password";
+        return "The password is too weak";
     }
 
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (!passwordRegex.test(password)) {
-      return "Weak password";
+      return "The password is too weak";
     }
 
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));

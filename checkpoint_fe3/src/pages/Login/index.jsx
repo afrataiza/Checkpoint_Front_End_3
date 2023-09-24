@@ -1,48 +1,51 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import * as C from "./style";
+import * as C from "./styles";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth, AuthProvider, emailRegex, passwordRegex } from "../../contexts/auth";
+import { AuthContext, emailRegex, passwordRegex } from "../../contexts/auth";
+
 const Login = () => {
-  const { login } = useAuth();
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // if (!emailRegex.test(email)) {
     //     setError("E-mail inválido");
     //     return;
     //   }
 
-    
     if (!email || email.length < 5) {
-        setError("Login information is too short");
-        return;
-    } 
-    
+      setError("Login information is too short");
+      return;
+    }
+
     if (!passwordRegex.test(password)) {
-        setError("Weak password");
-        return;
-      }
+      setError("Weak password");
+      return;
+    }
 
     if (!email || !password) {
       setError("Re-check your information and try again");
       return;
     }
 
-    const res = login(email, password);
-
-    if (res) {
-      setError(res);
-      return;
+    try {
+      const res = await login(email, password);
+      if (res) {
+        setError(res);
+      } else {
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("Error during login");
     }
-
-    navigate("/home");
   };
 
   return (

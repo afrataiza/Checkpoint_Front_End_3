@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate} from "react-router-dom";
 import Button from "../../components/Button";
-import useAuth from "../../hooks/useAuth";
+import { AuthContext } from "../../contexts/auth";
 import * as C from "./styles";
 
 const Home = () => {
-  const { signout } = useAuth();
+  const { signout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (

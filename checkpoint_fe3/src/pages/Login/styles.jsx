@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -29,10 +30,6 @@ export const Label = styled.label`
   color: #676767;
 `;
 
-export const LabelSignup = styled.label`
-  font-size: 16px;
-  color: #676767;
-`;
 
 export const labelError = styled.label`
   font-size: 14px;

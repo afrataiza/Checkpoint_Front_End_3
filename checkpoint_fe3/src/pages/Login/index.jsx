@@ -1,50 +1,39 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useContext } from "react";
+import  { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as C from "./styles";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext, emailRegex, passwordRegex } from "../../contexts/auth";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/auth"; 
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext); 
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    // if (!emailRegex.test(email)) {
-    //     setError("E-mail inválido");
-    //     return;
-    //   }
-
-    if (!email || email.length < 5) {
-      setError("Login information is too short");
+    if (!user || user.length < 5) {
+      setError("Verifique suas informações novamente.");
       return;
     }
 
-    if (!passwordRegex.test(password)) {
-      setError("Weak password");
-      return;
-    }
-
-    if (!email || !password) {
-      setError("Re-check your information and try again");
+    if (!password) {
+      setError("Por favor digite uma senha");
       return;
     }
 
     try {
-      const res = await login(email, password);
+      const res = await login(user, password);
       if (res) {
         setError(res);
       } else {
         navigate("/home");
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      setError("Error during login");
+      console.error("Erro durante o login:", error);
+      setError("Erro durante o login");
     }
   };
 
@@ -53,10 +42,10 @@ const Login = () => {
       <C.Label>Login</C.Label>
       <C.Content>
         <Input
-          type="email"
+          type="user"
           placeholder="Login"
-          value={email}
-          onChange={(e) => [setEmail(e.target.value), setError("")]}
+          value={user}
+          onChange={(e) => [setUser(e.target.value), setError("")]}
         />
         <Input
           type="password"
@@ -66,12 +55,12 @@ const Login = () => {
         />
         <C.labelError>{error}</C.labelError>
         <Button Text="Send" onClick={handleLogin} />
-        <C.LabelSignup>
+        {/* <C.LabelSignup>
           Not registered?
           <C.Strong>
             <Link to="/signup">&nbsp;Sign up</Link>
           </C.Strong>
-        </C.LabelSignup>
+        </C.LabelSignup> */}
       </C.Content>
     </C.Container>
   );

@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 
 export const AuthContext = createContext({});
 
-export const emailRegex = /^[A-Za-z0-9+_.-]+@(.+)$/;
 export const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
 export const AuthProvider = ({ children }) => {
@@ -23,41 +22,39 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = async (email, password) => {
-    
-    if (!emailRegex.test(email)) {
-      return "Invalid e-mail";
+  const login = async (username, password) => {
+    if (username.length <= 5) {
+      return "Verifique suas informações novamente.";
+    }
+
+    if (!password) {
+      return "Por favor digite uma senha.";
     }
 
     if (!passwordRegex.test(password)) {
-        return "The password is too weak";
+      return "Senha fraca, verifique suas informações.";
     }
 
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
 
-    const hasUser = usersStorage?.filter((user) => user.email === email);
+    const hasUser = usersStorage?.filter((user) => user.username === username);
 
     if (hasUser?.length) {
-      if (hasUser[0].email === email && hasUser[0].password === password) {
+      if (hasUser[0].username === username && hasUser[0].password === password) {
         const token = Math.random().toString(36).substring(2);
-        localStorage.setItem("user_token", JSON.stringify({ email, token }));
-        setUser({ email, password });
+        localStorage.setItem("user_token", JSON.stringify({ username, token }));
+        setUser({ username, password });
       } else {
-        return "Incorrect e-mail or password";
+        return "Nome de usuário ou senha incorretos";
       }
     } else {
-      return "The user isn't registered";
+      return "O usuário não está registrado.";
     }
   };
 
   const signup = async (email, password) => {
-   
-    if (!emailRegex.test(email)) {
-      return "Invalid e-mail";
-    }
-
     if (!passwordRegex.test(password)) {
-      return "The password is too weak";
+      return "A senha é muito fraca.";
     }
 
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
@@ -65,7 +62,7 @@ export const AuthProvider = ({ children }) => {
     const hasUser = usersStorage?.filter((user) => user.email === email);
 
     if (hasUser?.length) {
-      return "An account with this e-mail is already in use";
+      return "Esse usuário já existe.";
     }
 
     let newUser;
@@ -86,25 +83,23 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user_token");
   };
 
- 
   const fetchDentists = async () => {
     try {
       const response = await axios.get("https://dhodonto.ctd.academy/dentista");
-      return response.data; 
+      return response.data;
     } catch (error) {
-      console.error("Error fetching dentists:", error);
-      throw error; 
+      console.error("Erro procurando dentistas:", error);
+      throw error;
     }
   };
 
- 
   const fetchPatients = async () => {
     try {
       const response = await axios.get("https://dhodonto.ctd.academy/paciente");
-      return response.data; 
+      return response.data;
     } catch (error) {
-      console.error("Error fetching patients:", error);
-      throw error; 
+      console.error("Erro buscando pacientes:", error);
+      throw error;
     }
   };
 

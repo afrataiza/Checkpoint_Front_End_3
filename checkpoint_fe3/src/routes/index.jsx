@@ -5,7 +5,6 @@ import { AuthProvider, AuthContext } from "../contexts/auth";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Signup from "../pages/SignUp";
 
 const Private = ({ Item }) => {
     const { signed } = useContext(AuthContext);
@@ -21,7 +20,6 @@ const RoutesApp = () => {
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
           <Route path="*" element={<Login />} />
         </Routes>
       </Fragment>

@@ -62,10 +62,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signout = () => {
-    setUsername(null);
     localStorage.removeItem("user_token");
+    setUsername(null);
     setAxiosInstance(null);
   };
+
 
   const fetchDentists = async (id) => {
     try {

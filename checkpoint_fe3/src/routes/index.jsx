@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "../contexts/auth";
 import Home from "../pages/Home";
@@ -11,7 +9,7 @@ const RoutesApp = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login />} index />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

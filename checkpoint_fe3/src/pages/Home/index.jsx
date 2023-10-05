@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import { AuthContext } from "../../contexts/auth";
 import * as C from "./styles";
 import axios from "axios"; 
-import DentistaCard from "../../components/DentistaCard"
+import DentistaCard from "../../components/DentistaCard";
 
 const Home = () => {
   const { signout } = useContext(AuthContext);
@@ -23,8 +23,7 @@ const Home = () => {
 
   return (
     <C.Container>
-      <C.Title>Home</C.Title>
-      <h2>Dentistas Disponiveis</h2>
+      <C.Title>Dentistas Disponiveis</C.Title>
       <div>
         {dentista.map((dentista) => (
           <DentistaCard key={dentista.matricula} dentista={dentista}></DentistaCard>

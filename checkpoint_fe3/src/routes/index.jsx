@@ -19,10 +19,9 @@ const RoutesApp = () => {
     <BrowserRouter>
       <Fragment>
         <Routes>
-         <Route exact path="/" element={<DefaultLayout/>} />
-          <Route exact path="/home" element={<Home/>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Login />} />
+        <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Login />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

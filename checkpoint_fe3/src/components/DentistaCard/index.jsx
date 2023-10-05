@@ -1,45 +1,51 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
  
-/*
-const getRandomAvatar = async () => {
-    try {
-      const response = await axios.get("https://randomuser.me/api/");
-      const avatarURL = response.data.results[0].picture.large;
-      return avatarURL;
-    } catch (error) {
-      console.error("Erro ao buscar avatar:", error);
-      return null;
-    }
-  };
+const getDentistaImage = async () => {
+  try {
+    const response = await axios.get(
+      'https://api.unsplash.com/search/photos',
+      {
+        headers: {
+          Authorization: `Client-ID aBWzUYRz1o9GEYJM8FdDxXvSaNxTD_BgTue_QaWoKMI`,
+        },
+        params: {
+          query: 'professional dentist in lab coat',
+          per_page: 50, 
+        },
+      }
+    );
 
-  */
+    return response.data.results.map((result) => result.urls.small);
+  } catch (error) {
+    console.error('Erro ao buscar imagens de médicos:', error);
+    return [];
+  }
+};
 
 const DentistaCard = ({dentista}) => { 
-    /*
-    const [avatar, setAvatar] = useState(null);
+  const [dentistaImage, setDentistaImage] = useState(null);
 
   useEffect(() => {
-    const fetchAvatar = async () => {
-      const randomAvatar = await getRandomAvatar();
-      if (randomAvatar) {
-        setAvatar(randomAvatar);
+    const fetchDentistaImage = async () => {
+      const dentistaImages = await getDentistaImage();
+      if (dentistaImages.length > 0) {
+        const randomIndex = Math.floor(Math.random() * dentistaImages.length);
+        setDentistaImage(dentistaImages[randomIndex]);
       }
     };
 
-    fetchAvatar();
+    fetchDentistaImage();
   }, []);
-
-  */
 
     if(!dentista || !dentista.nome){
         return <div>Dentista não encontrado.</div>
     }
     return(
         <div>
-            {/* <img src={avatar}  alt={dentista.nome} />*/}
+             <img src={dentistaImage}  alt={dentista.nome} />
              <h2>{dentista.nome} {dentista.sobrenome}</h2>
-             <p>{dentista.usuario.username}</p>
+             <p>Nome de usuário: @{dentista.usuario.username}</p>
         </div>
     );
 };

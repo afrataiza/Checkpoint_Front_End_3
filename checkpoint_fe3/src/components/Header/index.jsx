@@ -6,7 +6,7 @@ export function Header(){
             <h1>Odonto</h1>
             </div>
           <nav>
-            <li><a href="/home">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/">Marcar Consulta</a></li>
             <li>

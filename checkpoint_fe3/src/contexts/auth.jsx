@@ -1,101 +1,86 @@
-/* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import PropTypes from "prop-types"; 
 
 export const AuthContext = createContext({});
 
-export const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [username, setUsername] = useState();
+  const [axiosInstance, setAxiosInstance] = useState(null);
 
   useEffect(() => {
     const userToken = localStorage.getItem("user_token");
-    const usersStorage = localStorage.getItem("users_bd");
-
-    if (userToken && usersStorage) {
-      const hasUser = JSON.parse(usersStorage)?.filter(
-        (user) => user.email === JSON.parse(userToken).email
-      );
-
-      if (hasUser) setUser(hasUser[0]);
+    if (userToken) {
+      setUsername(JSON.parse(userToken));
+      const token = JSON.parse(userToken).token;
+      const instance = axios.create({
+        baseURL: "https://dhodonto.ctd.academy",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAxiosInstance(instance);
     }
   }, []);
 
   const login = async (username, password) => {
-    if (username.length <= 5) {
+    if (username.length <= 5 || !password) {
       return "Verifique suas informações novamente.";
     }
 
-    if (!password) {
-      return "Por favor digite uma senha.";
-    }
+    try {
+      const response = await axios.post(
+        "https://dhodonto.ctd.academy/auth",
+        {
+          username,
+          password,
+        }
+      );
 
-    if (!passwordRegex.test(password)) {
-      return "Senha fraca, verifique suas informações.";
-    }
-
-    const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
-
-    const hasUser = usersStorage?.filter((user) => user.username === username);
-
-    if (hasUser?.length) {
-      if (hasUser[0].username === username && hasUser[0].password === password) {
-        const token = Math.random().toString(36).substring(2);
-        localStorage.setItem("user_token", JSON.stringify({ username, token }));
-        setUser({ username, password });
+      if (response.status === 200) {
+        const token = response.data.token;
+        localStorage.setItem(
+          "user_token",
+          JSON.stringify({ username, token })
+        );
+        setUsername({ username });
+        const instance = axios.create({
+          baseURL: "https://dhodonto.ctd.academy",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAxiosInstance(instance);
+        return null;
       } else {
         return "Nome de usuário ou senha incorretos";
       }
-    } else {
-      return "O usuário não está registrado.";
+    } catch (error) {
+      console.error("Erro durante o login:", error);
+      return "Erro durante o login";
     }
-  };
-
-  const signup = async (email, password) => {
-    if (!passwordRegex.test(password)) {
-      return "A senha é muito fraca.";
-    }
-
-    const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
-
-    const hasUser = usersStorage?.filter((user) => user.email === email);
-
-    if (hasUser?.length) {
-      return "Esse usuário já existe.";
-    }
-
-    let newUser;
-
-    if (usersStorage) {
-      newUser = [...usersStorage, { email, password }];
-    } else {
-      newUser = [{ email, password }];
-    }
-
-    localStorage.setItem("users_bd", JSON.stringify(newUser));
-
-    return;
   };
 
   const signout = () => {
-    setUser(null);
+    setUsername(null);
     localStorage.removeItem("user_token");
+    setAxiosInstance(null);
   };
 
-  const fetchDentists = async () => {
+  const fetchDentists = async (id) => {
     try {
-      const response = await axios.get("https://dhodonto.ctd.academy/dentista");
+      const response = await axiosInstance.get(`/dentista?matricula=${id}`);
       return response.data;
     } catch (error) {
       console.error("Erro procurando dentistas:", error);
       throw error;
     }
   };
+  
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get("https://dhodonto.ctd.academy/paciente");
+      const response = await axiosInstance.get("/paciente");
       return response.data;
     } catch (error) {
       console.error("Erro buscando pacientes:", error);
@@ -106,10 +91,9 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
-        signed: !!user,
+        username,
+        signed: !!username,
         login,
-        signup,
         signout,
         fetchDentists,
         fetchPatients,
@@ -118,4 +102,9 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

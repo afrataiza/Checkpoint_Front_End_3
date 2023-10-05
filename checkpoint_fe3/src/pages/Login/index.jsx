@@ -1,39 +1,30 @@
-import  { useState, useContext } from "react";
+// Login.jsx
+import { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import * as C from "./styles";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/auth"; 
+import { AuthContext } from "../../contexts/auth";
+import * as C from "./styles";
 
 const Login = () => {
-  const { login } = useContext(AuthContext); 
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    if (!user || user.length < 5) {
+    if (!username || username.length < 5 || !password) {
       setError("Verifique suas informações novamente.");
       return;
     }
 
-    if (!password) {
-      setError("Por favor digite uma senha");
-      return;
-    }
-
-    try {
-      const res = await login(user, password);
-      if (res) {
-        setError(res);
-      } else {
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Erro durante o login:", error);
-      setError("Erro durante o login");
+    const res = await login(username, password);
+    if (res) {
+      setError(res);
+    } else {
+      navigate("/home");
     }
   };
 
@@ -42,25 +33,23 @@ const Login = () => {
       <C.Label>Login</C.Label>
       <C.Content>
         <Input
-          type="user"
+          type="text"
+          id="username"
+          name="login"
+          required
           placeholder="Login"
-          value={user}
-          onChange={(e) => [setUser(e.target.value), setError("")]}
+          value={username}
+          onChange={(e) => [setUsername(e.target.value), setError("")]}
         />
         <Input
           type="password"
+          required
           placeholder="Password"
           value={password}
-          onChange={(e) => [setPassword(e.target.value), setError("")]}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <C.labelError>{error}</C.labelError>
         <Button Text="Send" onClick={handleLogin} />
-        {/* <C.LabelSignup>
-          Not registered?
-          <C.Strong>
-            <Link to="/signup">&nbsp;Sign up</Link>
-          </C.Strong>
-        </C.LabelSignup> */}
       </C.Content>
     </C.Container>
   );

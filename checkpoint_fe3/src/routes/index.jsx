@@ -1,29 +1,19 @@
-/* eslint-disable react/prop-types */
-import { Fragment, useContext } from "react";
+/* eslint-disable no-unused-vars */
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider, AuthContext } from "../contexts/auth";
-
+import { AuthProvider } from "../contexts/auth";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-
-const Private = ({ Item }) => {
-    const { signed } = useContext(AuthContext);
-
-  return signed > 0 ? <Item /> : <Login />;
-};
 
 const RoutesApp = () => {
   return (
     <AuthProvider>
-    <BrowserRouter>
-      <Fragment>
+      <BrowserRouter>
         <Routes>
-          <Route exact path="/home" element={<Private Item={Home} />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
-          <Route path="*" element={<Login />} />
         </Routes>
-      </Fragment>
-    </BrowserRouter>
+      </BrowserRouter>
     </AuthProvider>
   );
 };

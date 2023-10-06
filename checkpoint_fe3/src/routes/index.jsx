@@ -8,8 +8,9 @@ const RoutesApp = () => {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Login />} index />
+        <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

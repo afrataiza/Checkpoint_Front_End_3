@@ -1,7 +1,7 @@
 export function Header(){ 
     return(
         <header>
-            <div>
+            <div className="">
                 <img src="/dentistFavIcon.svg" alt="" />
             <h1>Odonto</h1>
             </div>

@@ -6,13 +6,17 @@ import GlobalStyle from "./globalStyle/global";
 import { Header }  from "./components/Header";
 import { Footer }  from "./components/Footer";
 
-const App = () => (
-  <AuthProvider>
-    <Header />
-    <RoutesApp />
-    <GlobalStyle />
-    <Footer />
-  </AuthProvider>
-);
+const App = () => {
+  return (
+    <div className="dark:bg-gray-800">    
+      <AuthProvider>
+        <Header />
+        <RoutesApp />
+        <GlobalStyle />
+        <Footer />
+      </AuthProvider>
+    </div>
+  )
+}
 
 export default App;

@@ -11,7 +11,7 @@ const getDentistaImage = async () => {
           Authorization: `Client-ID aBWzUYRz1o9GEYJM8FdDxXvSaNxTD_BgTue_QaWoKMI`,
         },
         params: {
-          query: 'professional dentist in lab coat',
+          query: 'professional dentist',
           per_page: 50, 
         },
       }

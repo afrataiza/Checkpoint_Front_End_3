@@ -7,7 +7,7 @@ import { Footer }  from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="dark:bg-zinc-900 text-neutral-700 dark:text-neutral-200">    
+    <div className="dark:bg-base-100 text-neutral-700 dark:text-neutral-200 overflow-x-hidden">    
       <AuthProvider>
         <DefaultProvider>
           <RoutesApp />

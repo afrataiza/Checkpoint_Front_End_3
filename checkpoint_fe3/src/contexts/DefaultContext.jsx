@@ -28,7 +28,7 @@ export const DefaultProvider = ({ children }) => {
       const response = await axios.get("https://dhodonto.ctd.academy/dentista");
       return response.data; 
     } catch (error) {
-      console.error("Error fetching dentists:", error);
+      console.error("Erro ao buscar dentistas:", error);
       throw error; 
     }
   };

@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react";
-import * as C from "./styles";
 
-const Button = ({ Text, onClick, Type = "button" }) => {
+const Button = ({ text, onClick, type = "button" }) => {
   return (
-    <C.Button type={Type} onClick={onClick}>
-      {Text}
-    </C.Button>
+    <button type={type} onClick={onClick} className="bg-primary rounded-md font-semibold px-8 py-2">
+      {text}
+    </button>
   );
 };
 

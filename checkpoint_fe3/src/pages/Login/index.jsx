@@ -3,8 +3,7 @@ import { useState, useContext } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/auth";
-import * as C from "./styles";
+import { AuthContext } from "../../contexts/Auth";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -29,10 +28,10 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <label className="bg-red-500">Login</label>
-      <div>
-        <input
+    <div className="w-screen min-h-screen flex pt-16 items-center flex-col gap-12">
+      <h2 className="font-semibold text-2xl">Login</h2>
+      <div className=" dark:bg-base-content w-96 h-56 rounded-xl flex flex-col items-center justify-center gap-4 shadow-md">
+        <Input
           type="text"
           id="username"
           name="login"
@@ -41,15 +40,15 @@ const Login = () => {
           value={username}
           onChange={(e) => [setUsername(e.target.value), setError("")]}
         />
-        <input
+        <Input
           type="password"
           required
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label>{error}</label>
-        <button type="button" onClick={handleLogin}> Entrar </button>
+        <label className="text-red-500 text-sm">{error}</label>
+        <Button text='Entrar' onClick={handleLogin} />
       </div>
     </div>
   );

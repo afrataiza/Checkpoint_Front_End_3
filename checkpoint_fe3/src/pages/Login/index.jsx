@@ -29,10 +29,10 @@ const Login = () => {
   };
 
   return (
-    <C.Container>
-      <C.Label>Login</C.Label>
-      <C.Content>
-        <Input
+    <div>
+      <label className="bg-red-500">Login</label>
+      <div>
+        <input
           type="text"
           id="username"
           name="login"
@@ -41,17 +41,17 @@ const Login = () => {
           value={username}
           onChange={(e) => [setUsername(e.target.value), setError("")]}
         />
-        <Input
+        <input
           type="password"
           required
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <C.labelError>{error}</C.labelError>
-        <Button Text="Send" onClick={handleLogin} />
-      </C.Content>
-    </C.Container>
+        <label>{error}</label>
+        <button type="button" onClick={handleLogin}> Entrar </button>
+      </div>
+    </div>
   );
 };
 

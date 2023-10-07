@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
+import { DefaultContext } from "../../contexts/DefaultContext";
 
 export function Header(){ 
-    const [colorTheme, setColorTheme] = useState('light');
+    const { useDarkSide } = useContext(DefaultContext);
+    const [colorTheme, setColorTheme] = useDarkSide();
     const [darkSide, setDarkSide] = useState(
         colorTheme === "light" ? true : false
     );
     
     const toggleTheme = (checked) => {
-        if(checked){
-            setColorTheme('dark');
-        } else {
-            setColorTheme('light');
-        }
+        setColorTheme(colorTheme);
         setDarkSide(checked);
-        document.documentElement.classlist.add('colorTheme');
     }
 
     return(

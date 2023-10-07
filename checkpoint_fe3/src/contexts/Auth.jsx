@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Erro durante o login:", error);
-      return "Erro durante o login";
+      return "Nome de usuário ou senha incorretos";
     }
   };
 

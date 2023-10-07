@@ -1,17 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import RoutesApp from "./routes";
-import { AuthProvider } from "./contexts/auth";
+import { AuthProvider } from "./contexts/Auth";
 import { DefaultProvider } from "./contexts/DefaultContext";
-import { Header }  from "./components/Header";
 import { Footer }  from "./components/Footer";
 
 const App = () => {
   return (
-    <div className="dark:bg-gray-800">    
+    <div className="dark:bg-zinc-900 text-neutral-700 dark:text-neutral-200">    
       <AuthProvider>
         <DefaultProvider>
-          <Header />
           <RoutesApp />
           <Footer />
         </DefaultProvider>

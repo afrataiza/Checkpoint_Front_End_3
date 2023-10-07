@@ -1,43 +1,35 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate} from "react-router-dom";
-import Button from "../../components/Button";
-import { AuthContext } from "../../contexts/auth";
-import * as C from "./styles";
-import axios from "axios"; 
+import { DefaultContext } from "../../contexts/DefaultContext";
 import DentistaCard from "../../components/DentistaCard";
 
 const Home = () => {
-  const { signout } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [dentista, setDentista] = useState([]);
+  
+  const { fetchDentists } = useContext(DefaultContext);
+  const [dentists, setDentists] = useState([]);
 
   useEffect(() => { 
-    axios.get("https://dhodonto.ctd.academy/dentista")
-    .then((response) => {
-      setDentista(response.data); 
-    }).catch((error) => {
-      console.error("Erro ao buscar dentista ", error); 
-    });
-  }, []);
+    const getDentists = async () => {
+      const result = await fetchDentists();
+      if (result) {
+        result.shift();
+        setDentists(result);
+      }
+    };
+    getDentists();
+    
+  }, [fetchDentists]);
 
-  const handleLogout = () => {
-    signout();
-    navigate("/");
-  };
-
+  
   return (
-    <C.Container>
-      <C.Title>Dentistas Disponiveis</C.Title>
-      <div>
-        {dentista.map((dentista) => (
-          <DentistaCard key={dentista.matricula} dentista={dentista}></DentistaCard>
+    <div className="w-screen min-h-screen flex flex-col gap-12 pt-16">
+      <h1 className="w-full text-center text-3xl font-bold">Dentistas Disponiveis</h1>
+      <div className="flex flex-wrap gap-8 w-full justify-between px-12">
+        {dentists.map((dentist) => (
+          <DentistaCard key={dentist.matricula} dentist={dentist}></DentistaCard>
         ))}
       </div>
-      <Button Text="Sair" onClick={() => [signout(), navigate("/")]}>
-        Sair
-      </Button>
-    </C.Container>
+    </div>
   );
 };
 

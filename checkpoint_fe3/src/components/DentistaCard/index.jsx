@@ -12,7 +12,7 @@ const DentistaCard = ({ dentist }) => {
       </h2>
       <p>Nome de usuário: @{dentist.usuario.username}</p>
       <Link
-        to="/"
+        to={`/dentist/${dentist.matricula}`}
         className="text-blue-500 hover:text-blue-700 hover:underline"
       > Ver mais detalhes
       </Link>

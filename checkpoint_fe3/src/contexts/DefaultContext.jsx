@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 export const DefaultProvider = ({ children }) => {
   const [dentistsList, setDentistsList] = useState([]);
   const [patientsList, setPatientsList] = useState([]);
-  const [consultStatus, setConsultStatus] = useState("");
 
   const useDarkSide = () => {
     const [theme, setTheme] = useState(localStorage.theme);
@@ -62,7 +61,7 @@ export const DefaultProvider = ({ children }) => {
       );
       if (response.status === 200) {
         toast.success("Consulta marcada com sucesso!");
-        setConsultStatus(response.status);
+        return response.status;
       }
     } catch (error) {
       toast.error(error.response.data);
@@ -98,7 +97,6 @@ export const DefaultProvider = ({ children }) => {
         useDarkSide,
         dentistsList,
         patientsList,
-        consultStatus,
         fetchConsults,
       }}
     >

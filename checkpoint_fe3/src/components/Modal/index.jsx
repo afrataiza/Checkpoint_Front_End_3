@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import Button from "../Button";
 
 const ConsultModal = ({ setModal }) => {
-  const { dentistsList, patientsList, consultStatus, fetchConsults } = useContext(DefaultContext);
+  const { dentistsList, patientsList, fetchConsults } = useContext(DefaultContext);
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -39,8 +39,8 @@ const ConsultModal = ({ setModal }) => {
       },
       dataHoraAgendamento: consultData.date,
     };
-    await fetchConsults(newConsult);
-    if (await consultStatus === 200) {
+    const status = await fetchConsults(newConsult);
+    if (status === 200) {
       navigate("/");
     }
   };

@@ -40,7 +40,7 @@ const ConsultModal = ({ setModal }) => {
       dataHoraAgendamento: consultData.date,
     };
     await fetchConsults(newConsult);
-    if (consultStatus === 200) {
+    if (await consultStatus === 200) {
       navigate("/");
     }
   };

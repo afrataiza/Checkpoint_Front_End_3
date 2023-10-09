@@ -26,7 +26,7 @@ export function Header() {
   return (
     <header className="w-screen h-24 flex justify-between pl-8 pr-20 items-center shadow-md">
       <div className="flex justify-center items-center gap-2 h-full">
-        <img src="/dentistFavIcon.png" alt="logo" className="w-12 h-12" />
+        <img src="/public/dentistFavIcon.png" alt="logo" className="w-12 h-12" />
         <h2 className="text-accent font-bold text-xl">HAP ODONTO</h2>
       </div>
       <nav>

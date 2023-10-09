@@ -1,10 +1,11 @@
 import { BsInstagram, BsFacebook, BsGithub } from "react-icons/bs";
+import logo from "../../../public/dentistFavIcon.png";
 
 export function Footer() {
   return (
     <div className="flex h-24 items-center bg-neutral-100 dark:bg-base-200 justify-around w-screen">
       <div className="flex justify-center items-center flex-col gap-2 h-full">
-        <img src="/public/dentistFavIcon.png" alt="logo" className="w-12 h-12" />
+        <img src={logo} alt="logo" className="w-12 h-12" />
         <h2 className="text-accent font-bold text-xl">HAP ODONTO</h2>
       </div>
       <div className="flex gap-8">

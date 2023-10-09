@@ -3,6 +3,7 @@ import { AuthProvider } from "../contexts/Auth";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import { Header }  from "../components/Header";
+import DentistDetails from "../pages/DentistDetails";
 
 const RoutesApp = () => {
     return (
@@ -12,6 +13,7 @@ const RoutesApp = () => {
           <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dentist/:id" element={<DentistDetails />} />
           <Route path="*" element={<Home />} />
           </Routes>
       </BrowserRouter>

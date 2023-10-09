@@ -5,20 +5,15 @@ import DentistaCard from "../../components/DentistaCard";
 
 const Home = () => {
   
-  const { fetchDentists } = useContext(DefaultContext);
+  const { dentistsList } = useContext(DefaultContext);
   const [dentists, setDentists] = useState([]);
 
   useEffect(() => { 
-    const getDentists = async () => {
-      const result = await fetchDentists();
-      if (result) {
-        result.shift();
-        setDentists(result);
-      }
-    };
-    getDentists();
+    if (dentistsList.length > 0) {
+      setDentists(dentistsList);
+    }
     
-  }, [fetchDentists]);
+  }, [dentistsList]);
 
   
   return (

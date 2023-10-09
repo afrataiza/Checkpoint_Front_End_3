@@ -1,4 +1,5 @@
 {
+  "homepage": "https://afrataiza.github.io//Checkpoint_Front_End_3",
   "name": "checkpoint_fe3",
   "private": true,
   "version": "0.0.0",
@@ -8,7 +9,9 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "axios": "^1.5.1",

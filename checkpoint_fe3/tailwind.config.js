@@ -11,8 +11,10 @@ export default {
       "base-100": "#1d232a",
       "base-200": "#191e24",
       },
+      listStyleImage: {
+        checkmark: 'url("/src/assets/check.png")',
+      },
     },
-    
   },
   plugins: [],
   darkMode: "class",
